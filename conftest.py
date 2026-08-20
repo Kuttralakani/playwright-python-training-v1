@@ -8,7 +8,6 @@ from playwright.sync_api import Page
 from pages.application import Application
 from utilities.file_reader import CONFIG
 
-
 RUN_TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 RUN_ARTIFACT_DIR = Path("artifacts") / RUN_TIMESTAMP
 ALLURE_RESULTS_DIR = RUN_ARTIFACT_DIR / "allure-results"
@@ -46,7 +45,9 @@ def capture_artifacts(page: Page, context, request):
     setup_report = getattr(request.node, "rep_setup", None)
     call_report = getattr(request.node, "rep_call", None)
 
-    test_failed = any(report is not None and report.failed for report in (setup_report, call_report))
+    test_failed = any(
+        report is not None and report.failed for report in (setup_report, call_report)
+    )
 
     capture_evidence = evidence_mode == "all" or (evidence_mode == "fail" and test_failed)
     save_trace = trace_mode == "all" or (trace_mode == "fail" and test_failed)
@@ -60,6 +61,8 @@ def capture_artifacts(page: Page, context, request):
             TRACE_DIR.mkdir(parents=True, exist_ok=True)
             trace_path = TRACE_DIR / f"{request.node.name}.zip"
             context.tracing.stop(path=str(trace_path))
-            allure.attach.file(trace_path, name="Playwright Trace", attachment_type="application/zip")
+            allure.attach.file(
+                trace_path, name="Playwright Trace", attachment_type="application/zip"
+            )
         else:
             context.tracing.stop()

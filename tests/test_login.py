@@ -10,7 +10,9 @@ from utilities.file_reader import read_csv
 @allure.feature("Authentication")
 @allure.story("Login Page")
 @allure.title("Verify login page loads successfully")
-@allure.description("Verify that the user can navigate to the login page and the login form is displayed.")
+@allure.description(
+    "Verify that the user can navigate to the login page and the login form is displayed."
+)
 def test_login_page_loads(app: Application) -> None:
     with allure.step("Open the application"):
         app.home_page.open()
@@ -27,7 +29,9 @@ def test_login_page_loads(app: Application) -> None:
 @allure.feature("Authentication")
 @allure.story("Login Validation")
 @allure.title("Validate login with different credentials")
-@allure.description("Verify login behaviour using valid and invalid credentials from external test data.")
+@allure.description(
+    "Verify login behaviour using valid and invalid credentials from external test data."
+)
 @pytest.mark.parametrize("credentials", read_csv("test_login.csv"))
 def test_login_validation(app: Application, credentials: dict) -> None:
     allure.dynamic.parameter("Login Type", credentials["type"])
