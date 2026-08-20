@@ -1,0 +1,11 @@
+application:
+  name: Automation Exercise
+
+base_url: "https://automationexercise.com/"
+
+test_data:
+  dir: "test_data/"
+
+artifacts:
+  evidence: all   # all | fail
+  trace: all     # all | fail | none

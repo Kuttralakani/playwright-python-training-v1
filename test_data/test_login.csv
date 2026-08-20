@@ -1,0 +1,3 @@
+email,password,expected_message,type
+${ENV_VALID_EMAIL_ID},${ENV_VALID_PASSWORD},Kuttralakani Moscomani,valid
+invalid@example.com,wrongpassword,Your email or password is incorrect!,invalid
