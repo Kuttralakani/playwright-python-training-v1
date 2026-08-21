@@ -53,7 +53,7 @@ def test_tc13_verify_product_quantity_in_cart(app: Application) -> None:
     with allure.step("Open a product from the Home page"):
         app.home_page.open()
         app.home_page.open_featured_product(BLUE_TOP["expected_product"])
-        app.product_details_page.verify_details_visible( BLUE_TOP["expected_product"] )
+        app.product_details_page.verify_details_visible(BLUE_TOP["expected_product"])
 
     with allure.step(f"Set quantity to {expected_quantity} and add to Cart"):
         app.product_details_page.set_quantity(expected_quantity)
@@ -61,7 +61,7 @@ def test_tc13_verify_product_quantity_in_cart(app: Application) -> None:
         app.product_details_page.view_cart_from_modal()
 
     with allure.step("Verify quantity in Cart"):
-        actual_quantity = int( app.cart_page.quantity_text(BLUE_TOP["expected_product"]) )
+        actual_quantity = int(app.cart_page.quantity_text(BLUE_TOP["expected_product"]))
         assert actual_quantity == expected_quantity
 
 
@@ -85,7 +85,10 @@ def test_tc17_remove_products_from_cart(app: Application) -> None:
 @allure.story("Search Persistence")
 @allure.title("TC20 - Search Products and Verify Cart After Login")
 @pytest.mark.regression
-def test_tc20_search_products_and_verify_cart_after_login(app: Application, registered_user: dict[str, str], ) -> None:
+def test_tc20_search_products_and_verify_cart_after_login(
+    app: Application,
+    registered_user: dict[str, str],
+) -> None:
     with allure.step("Search a product"):
         app.home_page.open()
         app.home_page.go_to_products()
@@ -99,7 +102,10 @@ def test_tc20_search_products_and_verify_cart_after_login(app: Application, regi
 
     with allure.step("Login and return to Cart"):
         app.home_page.go_to_login()
-        app.login_page.login( registered_user["email"], registered_user["password"], )
+        app.login_page.login(
+            registered_user["email"],
+            registered_user["password"],
+        )
         app.landing_page.verify_logged_in(registered_user["name"])
         app.home_page.go_to_cart()
 

@@ -647,9 +647,7 @@ retrieves the real value.
 If the value is missing:
 
 ```python
-raise ValueError(
-    f"Environment variable is not configured: {variable_name}"
-)
+raise ValueError(f"Environment variable is not configured: {variable_name}")
 ```
 
 So a missing credential is reported clearly rather than sending an empty password to the website.
@@ -808,9 +806,7 @@ Important method:
 ```python
 def open(self) -> None:
     self.page.goto(self.base_url, wait_until="domcontentloaded")
-    expect(self.page).to_have_title(
-        re.compile(r"Automation Exercise")
-    )
+    expect(self.page).to_have_title(re.compile(r"Automation Exercise"))
 ```
 
 This method both navigates and confirms that the expected application page was reached.
@@ -839,17 +835,11 @@ self.login_heading = page.get_by_role(
     name="Login to your account",
 )
 
-self.email_input = page.locator(
-    '[data-qa="login-email"]'
-)
+self.email_input = page.locator('[data-qa="login-email"]')
 
-self.password_input = page.locator(
-    '[data-qa="login-password"]'
-)
+self.password_input = page.locator('[data-qa="login-password"]')
 
-self.login_button = page.locator(
-    '[data-qa="login-button"]'
-)
+self.login_button = page.locator('[data-qa="login-button"]')
 ```
 
 Login operation:
@@ -880,11 +870,7 @@ After a valid login, the framework verifies:
 
 ```python
 def verify_logged_in(self, username: str) -> None:
-    expect(
-        self.page.get_by_text(
-            f"Logged in as {username}"
-        )
-    ).to_be_visible()
+    expect(self.page.get_by_text(f"Logged in as {username}")).to_be_visible()
 ```
 
 It also contains reusable locators/actions for:
@@ -1138,9 +1124,7 @@ def pytest_configure(config):
         exist_ok=True,
     )
 
-    config.option.allure_report_dir = str(
-        ALLURE_RESULTS_DIR
-    )
+    config.option.allure_report_dir = str(ALLURE_RESULTS_DIR)
 ```
 
 does two things:
@@ -1371,14 +1355,9 @@ context.tracing.start(
 After the test, when the trace must be retained:
 
 ```python
-trace_path = (
-    TRACE_DIR
-    / f"{request.node.name}.zip"
-)
+trace_path = TRACE_DIR / f"{request.node.name}.zip"
 
-context.tracing.stop(
-    path=str(trace_path)
-)
+context.tracing.stop(path=str(trace_path))
 ```
 
 Then the same trace is attached to Allure:
@@ -2001,7 +1980,7 @@ Delete the account
 The `case_id` CSV column is used as the Pytest parametrize ID:
 
 ```python
-ids=lambda row: row["case_id"],
+ids = (lambda row: row["case_id"],)
 ```
 
 so the Allure test name and trace file name show the case identifier rather than an index number.
@@ -2512,9 +2491,7 @@ from playwright.sync_api import Page, expect
 class ProductsPage:
     def __init__(self, page: Page) -> None:
         self.page = page
-        self.search_input = page.locator(
-            '[data-qa="search-product"]'
-        )
+        self.search_input = page.locator('[data-qa="search-product"]')
 
     def search(self, product_name: str) -> None:
         self.search_input.fill(product_name)

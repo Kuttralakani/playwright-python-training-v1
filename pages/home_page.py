@@ -11,18 +11,23 @@ class HomePage:
         self.products_link = page.get_by_role("link", name="Products")
         self.signup_login_link = page.get_by_role("link", name="Signup / Login")
         self.cart_link = page.get_by_role("link", name="Cart")
-        self.contact_link = page.get_by_role("link", name=re.compile(r"Contact us", re.IGNORECASE)).first
+        self.contact_link = page.get_by_role(
+            "link", name=re.compile(r"Contact us", re.IGNORECASE)
+        ).first
         self.test_cases_link = page.get_by_role("link", name="Test Cases").first
 
-        self.subscription_heading = page.get_by_text( re.compile(r"^Subscription$", re.IGNORECASE) )
+        self.subscription_heading = page.get_by_text(re.compile(r"^Subscription$", re.IGNORECASE))
         self.subscription_email = page.locator("#susbscribe_email")
         self.subscription_button = page.locator("#subscribe")
         self.subscription_success = page.locator("#success-subscribe")
 
-        self.category_heading = page.get_by_text( re.compile(r"^Category$", re.IGNORECASE) )
+        self.category_heading = page.get_by_text(re.compile(r"^Category$", re.IGNORECASE))
         self.recommended_items = page.locator(".recommended_items")
         self.scroll_up_button = page.locator("#scrollUp")
-        self.hero_text = page.locator(".carousel-inner .item.active").get_by_text( "Full-Fledged practice website for Automation Engineers", exact=True, )
+        self.hero_text = page.locator(".carousel-inner .item.active").get_by_text(
+            "Full-Fledged practice website for Automation Engineers",
+            exact=True,
+        )
 
     def open(self) -> None:
         self.page.goto(self.base_url, wait_until="commit")
@@ -61,17 +66,23 @@ class HomePage:
         self.subscription_button.click()
 
     def verify_subscription_success(self) -> None:
-        expect(self.subscription_success).to_contain_text( "You have been successfully subscribed!" )
+        expect(self.subscription_success).to_contain_text("You have been successfully subscribed!")
 
     def expand_category(self, category: str) -> None:
         self.page.locator(f'a[href="#{category}"]').click()
 
     def open_subcategory(self, category: str, subcategory: str) -> None:
-        self.page.locator(f"#{category}").get_by_role("link", name=subcategory, exact=True).click(no_wait_after=True)
+        self.page.locator(f"#{category}").get_by_role("link", name=subcategory, exact=True).click(
+            no_wait_after=True
+        )
         expect(self.page).to_have_url(re.compile(r".*/category_products/\d+"))
 
     def open_featured_product(self, product_name: str) -> None:
-        card = self.page.locator(".features_items .product-image-wrapper").filter(has_text=product_name).first
+        card = (
+            self.page.locator(".features_items .product-image-wrapper")
+            .filter(has_text=product_name)
+            .first
+        )
         card.get_by_role("link", name="View Product").click(no_wait_after=True)
         expect(self.page).to_have_url(re.compile(r".*/product_details/\d+"))
 

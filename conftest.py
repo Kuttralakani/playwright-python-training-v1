@@ -1,7 +1,7 @@
 import os
+from collections.abc import Generator
 from datetime import datetime
 from pathlib import Path
-from typing import Generator
 
 import allure
 import allure_commons

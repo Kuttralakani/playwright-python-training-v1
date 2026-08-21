@@ -7,9 +7,7 @@ from playwright.sync_api import Page, expect
 class ContactPage:
     def __init__(self, page: Page) -> None:
         self.page = page
-        self.heading = page.get_by_text(
-            re.compile(r"GET IN TOUCH", re.IGNORECASE)
-        )
+        self.heading = page.get_by_text(re.compile(r"GET IN TOUCH", re.IGNORECASE))
         self.name = page.locator('[data-qa="name"]')
         self.email = page.locator('[data-qa="email"]')
         self.subject = page.locator('[data-qa="subject"]')

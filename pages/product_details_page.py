@@ -13,9 +13,7 @@ class ProductDetailsPage:
         self.add_to_cart_button = page.get_by_role("button", name="Add to cart")
         self.cart_modal = page.locator("#cartModal")
 
-        self.review_heading = page.get_by_text(
-            re.compile(r"WRITE YOUR REVIEW", re.IGNORECASE)
-        )
+        self.review_heading = page.get_by_text(re.compile(r"WRITE YOUR REVIEW", re.IGNORECASE))
         self.review_name = page.locator("#name")
         self.review_email = page.locator("#email")
         self.review_text = page.locator("#review")
@@ -32,9 +30,7 @@ class ProductDetailsPage:
 
         for label in ("Category:", "Availability:", "Condition:", "Brand:"):
             expect(
-                self.product_information.get_by_text(
-                    re.compile(rf"^{re.escape(label)}")
-                )
+                self.product_information.get_by_text(re.compile(rf"^{re.escape(label)}"))
             ).to_be_visible()
         expect(self.price).to_be_visible()
 

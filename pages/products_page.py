@@ -17,18 +17,14 @@ class ProductsPage:
             "heading",
             name=re.compile(r"SEARCHED PRODUCTS", re.IGNORECASE),
         )
-        self.brands_heading = page.get_by_text(
-            re.compile(r"^Brands$", re.IGNORECASE)
-        )
+        self.brands_heading = page.get_by_text(re.compile(r"^Brands$", re.IGNORECASE))
         self.cart_modal = page.locator("#cartModal")
 
     def verify_loaded(self) -> None:
         expect(self.all_products_heading).to_be_visible()
 
     def product_card(self, product_name: str) -> Locator:
-        return self.page.locator(".product-image-wrapper").filter(
-            has_text=product_name
-        ).first
+        return self.page.locator(".product-image-wrapper").filter(has_text=product_name).first
 
     def product_name(self, product_name: str) -> Locator:
         return self.product_card(product_name).locator(".productinfo p").first

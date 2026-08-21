@@ -32,7 +32,7 @@ def test_tc25_scroll_up_using_arrow_and_scroll_down(app: Application) -> None:
 @allure.story("Scroll")
 @allure.title("TC26 - Verify Scroll Up without Arrow button and Scroll Down functionality")
 @pytest.mark.regression
-def test_tc26_scroll_up_without_arrow_and_scroll_down(app: Application ) -> None:
+def test_tc26_scroll_up_without_arrow_and_scroll_down(app: Application) -> None:
     with allure.step("Open application and scroll down to Subscription"):
         app.home_page.open()
         app.home_page.scroll_to_subscription()

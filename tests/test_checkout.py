@@ -12,7 +12,9 @@ PAYMENT = read_csv("checkout.csv")[0]
 @allure.story("Register During Checkout")
 @allure.title("TC14 - Place Order: Register while Checkout")
 @pytest.mark.regression
-def test_tc14_place_order_register_while_checkout(app: Application, new_user: dict[str, str]) -> None:
+def test_tc14_place_order_register_while_checkout(
+    app: Application, new_user: dict[str, str]
+) -> None:
     with allure.step("Open application, add product and open Cart"):
         app.home_page.open()
         app.add_product_and_open_cart(PRODUCT["expected_product"])
@@ -40,7 +42,9 @@ def test_tc14_place_order_register_while_checkout(app: Application, new_user: di
 @allure.story("Register Before Checkout")
 @allure.title("TC15 - Place Order: Register before Checkout")
 @pytest.mark.regression
-def test_tc15_place_order_register_before_checkout(app: Application, new_user: dict[str, str]) -> None:
+def test_tc15_place_order_register_before_checkout(
+    app: Application, new_user: dict[str, str]
+) -> None:
     with allure.step("Open application and register before shopping"):
         app.home_page.open()
         app.home_page.go_to_login()
@@ -65,7 +69,9 @@ def test_tc15_place_order_register_before_checkout(app: Application, new_user: d
 @allure.title("TC16 - Place Order: Login before Checkout")
 @pytest.mark.smoke
 @pytest.mark.regression
-def test_tc16_place_order_login_before_checkout(app: Application, registered_user: dict[str, str]) -> None:
+def test_tc16_place_order_login_before_checkout(
+    app: Application, registered_user: dict[str, str]
+) -> None:
     with allure.step("Login before shopping"):
         app.home_page.open()
         app.home_page.go_to_login()
@@ -90,7 +96,9 @@ def test_tc16_place_order_login_before_checkout(app: Application, registered_use
 @allure.story("Address Details")
 @allure.title("TC23 - Verify address details in checkout page")
 @pytest.mark.regression
-def test_tc23_verify_address_details_in_checkout_page(app: Application, new_user: dict[str, str]) -> None:
+def test_tc23_verify_address_details_in_checkout_page(
+    app: Application, new_user: dict[str, str]
+) -> None:
     with allure.step("Register a new user"):
         app.home_page.open()
         app.home_page.go_to_login()
@@ -113,7 +121,9 @@ def test_tc23_verify_address_details_in_checkout_page(app: Application, new_user
 @allure.story("Invoice")
 @allure.title("TC24 - Download Invoice after purchase order")
 @pytest.mark.regression
-def test_tc24_download_invoice_after_purchase_order(app: Application, new_user: dict[str, str], tmp_path) -> None:
+def test_tc24_download_invoice_after_purchase_order(
+    app: Application, new_user: dict[str, str], tmp_path
+) -> None:
     with allure.step("Open application, add product and open Cart"):
         app.home_page.open()
         app.add_product_and_open_cart(PRODUCT["expected_product"])

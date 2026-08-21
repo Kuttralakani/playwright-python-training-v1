@@ -13,9 +13,7 @@ class CartPage:
         )
         self.checkout_modal = page.locator("#checkoutModal")
 
-        self.subscription_heading = page.get_by_text(
-            re.compile(r"^Subscription$", re.IGNORECASE)
-        )
+        self.subscription_heading = page.get_by_text(re.compile(r"^Subscription$", re.IGNORECASE))
         self.subscription_email = page.locator("#susbscribe_email")
         self.subscription_button = page.locator("#subscribe")
         self.subscription_success = page.locator("#success-subscribe")
@@ -24,9 +22,11 @@ class CartPage:
         expect(self.cart_table).to_be_visible()
 
     def row(self, product_name: str) -> Locator:
-        return self.cart_table.locator("tbody tr").filter(
-            has=self.page.get_by_role("link", name=product_name, exact=True)
-        ).first
+        return (
+            self.cart_table.locator("tbody tr")
+            .filter(has=self.page.get_by_role("link", name=product_name, exact=True))
+            .first
+        )
 
     def product_link(self, product_name: str) -> Locator:
         return self.row(product_name).get_by_role(
@@ -66,6 +66,4 @@ class CartPage:
         self.subscription_button.click()
 
     def verify_subscription_success(self) -> None:
-        expect(self.subscription_success).to_contain_text(
-            "You have been successfully subscribed!"
-        )
+        expect(self.subscription_success).to_contain_text("You have been successfully subscribed!")
