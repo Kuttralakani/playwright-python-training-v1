@@ -1,1 +1,1 @@
-# playwright-python-training-v1
+# playwright-python-training-v2
