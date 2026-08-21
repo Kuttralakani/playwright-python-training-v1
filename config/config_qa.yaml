@@ -6,6 +6,13 @@ base_url: "https://automationexercise.com/"
 test_data:
   dir: "test_data/"
 
+timeouts:
+  default: 60000
+  navigation: 60000
+  
 artifacts:
-  evidence: all   # all | fail
-  trace: all     # all | fail | none
+  root_dir: "artifacts"
+  allure_dir: "allure-results"
+  trace_dir: "traces"
+  evidence: fail   # all | fail
+  trace: fail     # all | fail | none

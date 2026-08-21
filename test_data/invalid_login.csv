@@ -1,0 +1,2 @@
+case_id,email,password
+invalid_login,invalid.automation.user@example.com,WrongPassword123

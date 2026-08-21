@@ -4,51 +4,57 @@ import pytest
 from pages.application import Application
 from utilities.file_reader import read_csv
 
+_LOGIN_DATA = read_csv("test_login.csv")
+VALID_LOGIN = next(row for row in _LOGIN_DATA if row["type"] == "valid")
+INVALID_LOGINS = [row for row in _LOGIN_DATA if row["type"] == "invalid"]
 
+
+@allure.feature("Authentication")
+@allure.story("Valid Login")
+@allure.title("TC02 - Login User with correct email and password")
 @pytest.mark.smoke
 @pytest.mark.regression
-@allure.feature("Authentication")
-@allure.story("Login Page")
-@allure.title("Verify login page loads successfully")
-@allure.description(
-    "Verify that the user can navigate to the login page and the login form is displayed."
-)
-def test_login_page_loads(app: Application) -> None:
-    with allure.step("Open the application"):
+def test_tc02_login_user_with_correct_email_and_password(app: Application) -> None:
+    with allure.step("Open application and navigate to Login"):
         app.home_page.open()
-
-    with allure.step("Navigate to the login page"):
-        app.home_page.go_to_login()
-
-    with allure.step("Verify the login page is displayed"):
-        app.login_page.verify_loaded()
-
-
-@pytest.mark.smoke
-@pytest.mark.regression
-@allure.feature("Authentication")
-@allure.story("Login Validation")
-@allure.title("Validate login with different credentials")
-@allure.description(
-    "Verify login behaviour using valid and invalid credentials from external test data."
-)
-@pytest.mark.parametrize("credentials", read_csv("test_login.csv"))
-def test_login_validation(app: Application, credentials: dict) -> None:
-    allure.dynamic.parameter("Login Type", credentials["type"])
-
-    with allure.step("Open the application"):
-        app.home_page.open()
-
-    with allure.step("Navigate to the login page"):
         app.home_page.go_to_login()
         app.login_page.verify_loaded()
 
-    with allure.step("Enter credentials and submit login"):
+    with allure.step("Login with valid credentials"):
+        app.login_page.login(VALID_LOGIN["email"], VALID_LOGIN["password"])
+        app.landing_page.verify_logged_in(VALID_LOGIN["name"])
+
+
+@allure.feature("Authentication")
+@allure.story("Invalid Login")
+@allure.title("TC03 - Login User with incorrect email and password")
+@pytest.mark.regression
+@pytest.mark.parametrize("credentials", INVALID_LOGINS)
+def test_tc03_login_user_with_incorrect_email_and_password(
+    app: Application,
+    credentials: dict[str, str],
+) -> None:
+    with allure.step("Open application and navigate to Login"):
+        app.home_page.open()
+        app.home_page.go_to_login()
+        app.login_page.verify_loaded()
+
+    with allure.step("Submit invalid login credentials"):
         app.login_page.login(credentials["email"], credentials["password"])
+        app.login_page.verify_login_error()
 
-    if credentials["type"] == "valid":
-        with allure.step("Verify successful login"):
-            app.landing_page.verify_logged_in(credentials["expected_message"])
-    else:
-        with allure.step("Verify login error message"):
-            app.login_page.verify_login_error(credentials["expected_message"])
+
+@allure.feature("Authentication")
+@allure.story("Logout")
+@allure.title("TC04 - Logout User")
+@pytest.mark.regression
+def test_tc04_logout_user(app: Application) -> None:
+    with allure.step("Login with valid credentials"):
+        app.home_page.open()
+        app.home_page.go_to_login()
+        app.login_page.login(VALID_LOGIN["email"], VALID_LOGIN["password"])
+        app.landing_page.verify_logged_in(VALID_LOGIN["name"])
+
+    with allure.step("Logout and verify Login page"):
+        app.landing_page.logout()
+        app.login_page.verify_loaded()

@@ -1,0 +1,2 @@
+name,email,subject,message,upload_file
+Automation User,automation.contact@example.com,Automation Exercise Contact Test,This is an automated contact-form test message.,test_data/contact_upload.txt
